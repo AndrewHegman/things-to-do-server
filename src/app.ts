@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { router as toDosRouter } from "./routes/toDos";
 import { router as categoriesRouter } from "./routes/categories";
+const bodyParser = require("body-parser");
+import cors from "cors";
 
 var createError = require("http-errors");
 var express = require("express");
@@ -12,8 +14,11 @@ var app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors());
 
 app.use("/todos", toDosRouter);
 app.use("/categories", categoriesRouter);

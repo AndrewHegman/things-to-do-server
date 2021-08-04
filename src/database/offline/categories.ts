@@ -23,6 +23,7 @@ export const Categories = {
   },
   createCategory: (category: Category) => {
     CategoryData.push(category);
+    console.log(category);
     return Promise.resolve(CategoryData);
   },
   deleteCategory: (id: string) => {

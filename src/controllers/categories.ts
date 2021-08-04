@@ -34,6 +34,7 @@ export const updateCategory = async (req: Request, res: Response) => {
 
 export const createCategory = async (req: Request, res: Response) => {
   try {
+    console.log(req.body);
     return res.status(201).send(await Database.Categories.createCategory({ ...req.body, id: uuidv4() }));
   } catch (error) {
     return res.status(500).send({ message: "Unable to create ToDo" });
