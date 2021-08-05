@@ -43,8 +43,8 @@ export const createCategory = async (req: Request, res: Response) => {
 
 export const deleteCategory = async (req: Request, res: Response) => {
   try {
-    return res.status(201).send(await Database.Categories.deleteCategory(req.body.id));
+    return res.status(201).send(await Database.Categories.deleteCategory(req.params.id));
   } catch (error) {
-    return res.status(500).send({ message: `Error when trying to delete Category with id ${req.params.id}` });
+    return res.status(500).send({ message: `Error when trying to delete Category with id ${req.params.id}: ${error}` });
   }
 };

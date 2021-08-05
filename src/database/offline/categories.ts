@@ -9,21 +9,15 @@ export const Categories = {
     return Promise.resolve(CategoryData.find((category) => category.key === id));
   },
   updateCategory: (id: string, updatedCategory: Omit<Category, "key">) => {
-    return Promise.resolve(
-      CategoryData.map((category) => {
-        if (category.key === id) {
-          return {
-            ...category,
-            ...updatedCategory,
-          };
-        }
-        return category;
-      })
-    );
+    const idx = CategoryData.findIndex((category) => category.key === id);
+    CategoryData[idx] = {
+      ...CategoryData[idx],
+      ...updatedCategory,
+    };
+    return Promise.resolve(CategoryData);
   },
   createCategory: (category: Category) => {
     CategoryData.push(category);
-    console.log(category);
     return Promise.resolve(CategoryData);
   },
   deleteCategory: (id: string) => {
