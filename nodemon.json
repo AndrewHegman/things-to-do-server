@@ -1,0 +1,6 @@
+{
+  "ignore": ["*.test.ts", "fixtures/*"],
+  "ext": "ts",
+  "watch": ["src/"],
+  "exec": "npm run build && npm run start"
+}
