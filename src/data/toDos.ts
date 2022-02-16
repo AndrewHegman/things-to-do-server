@@ -1,52 +1,53 @@
+import { NamedTags } from "./tags";
 import { ToDoItem } from "../interfaces/toDo";
 
 export const toDos: ToDoItem[] = [
   {
     id: "0",
     name: "The Italian Job",
-    tags: [],
+    tags: [NamedTags.action],
     categoryKey: "0",
   },
   {
     id: "1",
     name: "Casablanca",
-    tags: [],
+    tags: [NamedTags.drama, NamedTags.romance, NamedTags.war],
     categoryKey: "0",
   },
   {
     id: "2",
     name: "Napoleon Dynamite",
-    tags: [],
+    tags: [NamedTags.comedy],
     categoryKey: "0",
   },
   {
     id: "3",
     name: "Ristorante Roma",
-    tags: [],
+    tags: [NamedTags.italian, NamedTags.carmel, NamedTags.takeParentsTo],
     categoryKey: "1",
   },
   {
     id: "4",
     name: "Italian House",
-    tags: [],
+    tags: [NamedTags.westfield, NamedTags.italian],
     categoryKey: "1",
   },
   {
     id: "5",
     name: "Juniper",
-    tags: [],
+    tags: [NamedTags.southern],
     categoryKey: "1",
   },
   {
     id: "6",
     name: "Bottleworks",
-    tags: [],
+    tags: [NamedTags.cocktailBar],
     categoryKey: "1",
   },
   {
     id: "7",
     name: "Chilly Water",
-    tags: [],
+    tags: [NamedTags.brewery, NamedTags.downtown],
     categoryKey: "1",
   },
   {

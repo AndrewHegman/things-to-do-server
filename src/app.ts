@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { router as toDosRouter } from "./routes/toDos";
 import { router as categoriesRouter } from "./routes/categories";
+import { router as tagsRouter } from "./routes/tags";
 const bodyParser = require("body-parser");
 import cors from "cors";
 
@@ -22,6 +23,7 @@ app.use(cors());
 
 app.use("/todos", toDosRouter);
 app.use("/categories", categoriesRouter);
+app.use("/tags", tagsRouter);
 // catch 404 and forward to error handler
 app.use(function (req: Request, res: Response, next: NextFunction) {
   next(createError(404));

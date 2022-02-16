@@ -15,11 +15,11 @@ export const getCategoryById = async (req: Request, res: Response) => {
   try {
     const toDo = await Database.Categories.getCategoryById(req.params.id);
     if (!toDo) {
-      return res.status(404).send({ message: `Unable to find ToDo with id ${req.params.id}` });
+      return res.status(404).send({ message: `Unable to find Category with id ${req.params.id}` });
     }
     return res.status(200).send(toDo);
   } catch (error) {
-    return res.status(500).send({ message: `Error when trying to find ToDo with id ${req.params.id}` });
+    return res.status(500).send({ message: `Error when trying to find Category with id ${req.params.id}` });
   }
 };
 
@@ -28,16 +28,15 @@ export const updateCategory = async (req: Request, res: Response) => {
     const { id } = req.params;
     return res.status(201).send(await Database.Categories.updateCategory(id, req.body));
   } catch (error) {
-    return res.status(500).send({ message: "Unable to update ToDo" });
+    return res.status(500).send({ message: "Unable to update Category" });
   }
 };
 
 export const createCategory = async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
-    return res.status(201).send(await Database.Categories.createCategory({ ...req.body, id: uuidv4() }));
+    return res.status(201).send(await Database.Categories.createCategory(req.body));
   } catch (error) {
-    return res.status(500).send({ message: "Unable to create ToDo" });
+    return res.status(500).send({ message: "Unable to create Category" });
   }
 };
 

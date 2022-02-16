@@ -4,10 +4,20 @@ import { v4 as uuidv4 } from "uuid";
 
 export const getAllToDos = async (req: Request, res: Response) => {
   try {
-    const todos = await Database.ToDos.getAllToDos();
+    let todos;
+    if (req.query.category) {
+      if (typeof req.query.category !== "string") {
+        return res
+          .status(500)
+          .send({ message: `Unable to fetch todos. Category must be a string, got ${typeof req.query.category}` });
+      }
+      todos = await Database.ToDos.getToDosByCategory(req.query.category);
+    } else {
+      todos = await Database.ToDos.getAllToDos();
+    }
     return res.status(200).send(todos);
   } catch (error) {
-    return res.status(500).send({ message: "Unable to fetch records" });
+    return res.status(500).send({ message: "Unable to fetch todos" });
   }
 };
 
@@ -36,7 +46,7 @@ export const createToDo = async (req: Request, res: Response) => {
   try {
     return res.status(201).send(await Database.ToDos.createToDo({ ...req.body, id: uuidv4() }));
   } catch (error) {
-    return res.status(500).send({ message: "Unable to create ToDo" });
+    return res.status(500).send({ message: `Unable to create ToDo: ${error}` });
   }
 };
 
