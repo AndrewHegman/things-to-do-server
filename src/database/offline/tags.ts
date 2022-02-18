@@ -10,10 +10,10 @@ export const Tags = {
     return Promise.resolve(TagsData.filter((tag) => tag.category === category));
   },
   getTagById: (id: string) => {
-    return Promise.resolve(TagsData.find((tag) => tag.id === id));
+    return Promise.resolve(TagsData.find((tag) => tag._id === id));
   },
   updateTag: (id: string, updatedTag: Omit<Tag, "id">) => {
-    const idx = TagsData.findIndex((tag) => tag.id === id);
+    const idx = TagsData.findIndex((tag) => tag._id === id);
     TagsData[idx] = {
       ...TagsData[idx],
       ...updatedTag,
@@ -35,13 +35,13 @@ export const Tags = {
       throw new Error("All tags must have a unique name in the same category");
     }
 
-    const newTag = { ...tag, id: uuidv4() };
+    const newTag = { ...tag, _id: uuidv4() };
 
     TagsData.push(newTag);
     return Promise.resolve(newTag);
   },
   deleteTag: (id: string) => {
-    const tagIdx = TagsData.findIndex((tag) => tag.id === id);
+    const tagIdx = TagsData.findIndex((tag) => tag._id === id);
     if (tagIdx === -1) {
       throw new Error(`No tag found with id ${id}`);
     }

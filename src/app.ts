@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
-app.use("/todos", toDosRouter);
+app.use("/things", toDosRouter);
 app.use("/categories", categoriesRouter);
 app.use("/tags", tagsRouter);
 // catch 404 and forward to error handler

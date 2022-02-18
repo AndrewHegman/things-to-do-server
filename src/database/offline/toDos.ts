@@ -7,29 +7,29 @@ export const ToDos = {
     return Promise.resolve(ToDoData);
   },
   getToDosByCategory: (category: string) => {
-    return Promise.resolve(ToDoData.filter((todo) => todo.categoryKey === category));
+    return Promise.resolve(ToDoData.filter((todo) => todo.category === category));
   },
   getToDoById: (id: string) => {
-    return Promise.resolve(ToDoData.find((toDo) => toDo.id === id));
+    return Promise.resolve(ToDoData.find((toDo) => toDo._id === id));
   },
   updateToDo: (id: string, updatedToDo: Omit<ToDoItem, "id">) => {
-    const idx = ToDoData.findIndex((toDo) => toDo.id === id);
+    const idx = ToDoData.findIndex((toDo) => toDo._id === id);
     ToDoData[idx] = {
       ...ToDoData[idx],
       ...updatedToDo,
     };
-    return ToDoData;
+    return Promise.resolve(ToDoData);
   },
   createToDo: (toDo: Omit<ToDoItem, "id">) => {
     if (!toDo.name) {
       throw new Error("Things must have a valid name");
     }
 
-    if (!toDo.categoryKey) {
+    if (!toDo.category) {
       throw new Error("Things must be associated with a valid category");
     }
 
-    if (ToDoData.findIndex((_toDo) => _toDo.name === toDo.name && _toDo.categoryKey === toDo.categoryKey) !== -1) {
+    if (ToDoData.findIndex((_toDo) => _toDo.name === toDo.name && _toDo.category === toDo.category) !== -1) {
       throw new Error("Things must have a unique name in the same category");
     }
 
@@ -39,7 +39,7 @@ export const ToDos = {
     return Promise.resolve(newToDo);
   },
   deleteToDo: (id: string) => {
-    const toDoIdx = ToDoData.findIndex((toDo) => toDo.id === id);
+    const toDoIdx = ToDoData.findIndex((toDo) => toDo._id === id);
     if (toDoIdx === -1) {
       throw new Error(`No thing found with id ${id}`);
     }

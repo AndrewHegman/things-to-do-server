@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { offline as Database } from "../database";
+import { online as oDatabase } from "../database";
 import { v4 as uuidv4 } from "uuid";
+import { ObjectId } from "mongodb";
 
 export const getAllToDos = async (req: Request, res: Response) => {
   try {
@@ -11,40 +13,40 @@ export const getAllToDos = async (req: Request, res: Response) => {
           .status(500)
           .send({ message: `Unable to fetch todos. Category must be a string, got ${typeof req.query.category}` });
       }
-      todos = await Database.ToDos.getToDosByCategory(req.query.category);
+      todos = await oDatabase.Things.getAllByCategory(new ObjectId(req.query.category));
     } else {
-      todos = await Database.ToDos.getAllToDos();
+      todos = await oDatabase.Things.getAll();
     }
     return res.status(200).send(todos);
   } catch (error) {
-    return res.status(500).send({ message: "Unable to fetch todos" });
+    return res.status(500).send({ message: `Unable to fetch things. ${error}` });
   }
 };
 
 export const getToDoById = async (req: Request, res: Response) => {
   try {
-    const toDo = await Database.ToDos.getToDoById(req.params.id);
+    const toDo = await oDatabase.Things.getById(new ObjectId(req.params.id));
     if (!toDo) {
-      return res.status(404).send({ message: `Unable to find ToDo with id ${req.params.id}` });
+      return res.status(404).send({ message: `Unable to find thing with id ${req.params.id}` });
     }
     return res.status(200).send(toDo);
   } catch (error) {
-    return res.status(500).send({ message: `Error when trying to find ToDo with id ${req.params.id}` });
+    return res.status(500).send({ message: `Error when trying to find thing with id ${req.params.id}` });
   }
 };
 
 export const updateToDo = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    return res.status(201).send(await Database.ToDos.updateToDo(id, req.body));
+    return res.status(201).send(await oDatabase.Things.update(new ObjectId(id), req.body));
   } catch (error) {
-    return res.status(500).send({ message: "Unable to update ToDo" });
+    return res.status(500).send({ message: `Unable to update thing. ${error}` });
   }
 };
 
 export const createToDo = async (req: Request, res: Response) => {
   try {
-    return res.status(201).send(await Database.ToDos.createToDo({ ...req.body, id: uuidv4() }));
+    return res.status(201).send(await oDatabase.Things.create(req.body));
   } catch (error) {
     return res.status(500).send({ message: `Unable to create ToDo: ${error}` });
   }
@@ -52,7 +54,7 @@ export const createToDo = async (req: Request, res: Response) => {
 
 export const deleteToDo = async (req: Request, res: Response) => {
   try {
-    return res.status(201).send(await Database.ToDos.deleteToDo(req.body.id));
+    return res.status(200).send(await oDatabase.Things.delete(new ObjectId(req.params.id)));
   } catch (error) {
     return res.status(500).send({ message: `Error when trying to delete ToDo with id ${req.params.id}` });
   }

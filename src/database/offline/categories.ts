@@ -7,17 +7,17 @@ export const Categories = {
     return Promise.resolve(CategoryData);
   },
   getCategoryById: (id: string) => {
-    return Promise.resolve(CategoryData.find((category) => category.key === id));
+    return Promise.resolve(CategoryData.find((category) => category._id === id));
   },
-  updateCategory: (id: string, updatedCategory: Omit<Category, "key">) => {
-    const idx = CategoryData.findIndex((category) => category.key === id);
+  updateCategory: (id: string, updatedCategory: Omit<Category, "_id">) => {
+    const idx = CategoryData.findIndex((category) => category._id === id);
     CategoryData[idx] = {
       ...CategoryData[idx],
       ...updatedCategory,
     };
     return Promise.resolve(CategoryData);
   },
-  createCategory: (category: Omit<Category, "key">) => {
+  createCategory: (category: Omit<Category, "_id">) => {
     if (!category.displayName) {
       throw new Error("Categories must have a valid name");
     }
@@ -26,13 +26,13 @@ export const Categories = {
       throw new Error(`Categories must have a unique name. ${category.displayName} already exists.`);
     }
 
-    const newCategory = { ...category, key: uuidv4() };
+    const newCategory = { ...category, _id: uuidv4() };
 
     CategoryData.push(newCategory);
     return Promise.resolve(newCategory);
   },
   deleteCategory: (id: string) => {
-    const categoryIdx = CategoryData.findIndex((category) => category.key === id);
+    const categoryIdx = CategoryData.findIndex((category) => category._id === id);
     if (categoryIdx === -1) {
       throw new Error(`No category found with id ${id}`);
     }

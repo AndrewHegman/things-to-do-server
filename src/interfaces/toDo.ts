@@ -1,8 +1,8 @@
 import { Tag } from "./tag";
 
 export type ToDoItem = {
-  id: string;
+  _id: string;
   name: string;
   tags: Tag[];
-  categoryKey: string;
+  category: string;
 };
