@@ -1,6 +1,7 @@
 import { Db, MongoClient } from "mongodb";
+import "dotenv/config";
 
-const connectionString = `mongodb+srv://admin:FormD7cMrEDGEjb8@inventory.fcghx.mongodb.net/test`;
+const connectionString = `mongodb+srv://admin:${process.env.DATABASE_PW}@inventory.fcghx.mongodb.net/test`;
 const client = new MongoClient(connectionString);
 
 class Connection {
